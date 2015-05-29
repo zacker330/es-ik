@@ -133,7 +133,7 @@ class DictSegment implements Comparable<DictSegment>{
 
 		}else if(segmentMap != null){
 			//在map中查找
-			ds = (DictSegment)segmentMap.get(keyChar);
+			ds = segmentMap.get(keyChar);
 		}
 		
 		//STEP2 找到DictSegment，判断词的匹配状态，是否继续递归，还是返回结果
@@ -261,7 +261,7 @@ class DictSegment implements Comparable<DictSegment>{
 			//获取Map容器，如果Map未创建,则创建Map
 			Map<Character , DictSegment> segmentMap = getChildrenMap();
 			//搜索Map
-			ds = (DictSegment)segmentMap.get(keyChar);
+			ds = segmentMap.get(keyChar);
 			if(ds == null && create == 1){
 				//构造新的segment
 				ds = new DictSegment(keyChar);

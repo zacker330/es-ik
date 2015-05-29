@@ -75,7 +75,7 @@ public class Dictionary {
 	 * 词典初始化
 	 * 由于IK Analyzer的词典采用Dictionary类的静态方法进行词典初始化
 	 * 只有当Dictionary类被实际调用时，才会开始载入词典，
-	 * 这将延长首次分词操作的时间
+	 * 这将延长首次分词操作的时间6.1.1
 	 * 该方法提供了一个在应用加载阶段就初始化字典的手段
 	 * @return Dictionary
 	 */
@@ -194,7 +194,8 @@ public class Dictionary {
 	private void loadMainDict(){
 		//建立一个主词典实例
 		_MainDict = new DictSegment((char)0);
-		//读取主词典文件
+        System.out.println(cfg.getMainDictionary());
+        //读取主词典文件
         InputStream is = this.getClass().getClassLoader().getResourceAsStream(cfg.getMainDictionary());
         if(is == null){
         	throw new RuntimeException("Main Dictionary not found!!!");
