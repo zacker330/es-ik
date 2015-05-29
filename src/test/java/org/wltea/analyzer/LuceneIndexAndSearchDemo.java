@@ -23,7 +23,7 @@
  * 
  * 
  */
-package org.wltea.analyzer.sample;
+package org.wltea.analyzer;
 
 import java.io.IOException;
 
