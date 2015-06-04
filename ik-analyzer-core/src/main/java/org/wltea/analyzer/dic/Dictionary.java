@@ -191,137 +191,25 @@ public class Dictionary {
 	/**
 	 * 加载主词典及扩展词典
 	 */
-	private void loadMainDict(){
-		//建立一个主词典实例
-		_MainDict = new DictSegment((char)0);
-        System.out.println(cfg.getMainDictionary());
-        //读取主词典文件
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream(cfg.getMainDictionary());
-        if(is == null){
-        	throw new RuntimeException("Main Dictionary not found!!!");
+	private void loadMainDict() {
+        //建立一个主词典实例
+        _MainDict = new DictSegment((char) 0);
+        for (char[] segment : cfg.loadMainDictionary()) {
+            _MainDict.fillSegment(segment);
+
         }
-        
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(is , "UTF-8"), 512);
-			String theWord = null;
-			do {
-				theWord = br.readLine();
-				if (theWord != null && !"".equals(theWord.trim())) {
-					_MainDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
-				}
-			} while (theWord != null);
-			
-		} catch (IOException ioe) {
-			System.err.println("Main Dictionary loading exception.");
-			ioe.printStackTrace();
-			
-		}finally{
-			try {
-				if(is != null){
-                    is.close();
-                    is = null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		//加载扩展词典
-		this.loadExtDict();
-	}	
-	
-	/**
-	 * 加载用户配置的扩展词典到主词库表
-	 */
-	private void loadExtDict(){
-		//加载扩展词典配置
-		List<String> extDictFiles  = cfg.getExtDictionarys();
-		if(extDictFiles != null){
-			InputStream is = null;
-			for(String extDictName : extDictFiles){
-				//读取扩展词典文件
-				System.out.println("加载扩展词典：" + extDictName);
-				is = this.getClass().getClassLoader().getResourceAsStream(extDictName);
-				//如果找不到扩展的字典，则忽略
-				if(is == null){
-                    continue;
-				}
-				try {
-					BufferedReader br = new BufferedReader(new InputStreamReader(is , "UTF-8"), 512);
-					String theWord = null;
-					do {
-						theWord = br.readLine();
-                        System.out.println(theWord);
-                        if (theWord != null && !"".equals(theWord.trim())) {
-							//加载扩展词典数据到主内存词典中
-							//System.out.println(theWord);
-							_MainDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
-						}
-					} while (theWord != null);
-					
-				} catch (IOException ioe) {
-					System.err.println("Extension Dictionary loading exception.");
-					ioe.printStackTrace();
-					
-				}finally{
-					try {
-						if(is != null){
-		                    is.close();
-		                    is = null;
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}		
-	}
-	
-	/**
+    }
+
+    /**
 	 * 加载用户扩展的停止词词典
 	 */
 	private void loadStopWordDict(){
 		//建立一个主词典实例
 		_StopWordDict = new DictSegment((char)0);
-		//加载扩展停止词典
-		List<String> extStopWordDictFiles  = cfg.getExtStopWordDictionarys();
-		if(extStopWordDictFiles != null){
-			InputStream is = null;
-			for(String extStopWordDictName : extStopWordDictFiles){
-				System.out.println("加载扩展停止词典：" + extStopWordDictName);
-				//读取扩展词典文件
-				is = this.getClass().getClassLoader().getResourceAsStream(extStopWordDictName);
-				//如果找不到扩展的字典，则忽略
-				if(is == null){
-					continue;
-				}
-				try {
-					BufferedReader br = new BufferedReader(new InputStreamReader(is , "UTF-8"), 512);
-					String theWord = null;
-					do {
-						theWord = br.readLine();
-						if (theWord != null && !"".equals(theWord.trim())) {
-							//System.out.println(theWord);
-							//加载扩展停止词典数据到内存中
-							_StopWordDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
-						}
-					} while (theWord != null);
-					
-				} catch (IOException ioe) {
-					System.err.println("Extension Stop word Dictionary loading exception.");
-					ioe.printStackTrace();
-					
-				}finally{
-					try {
-						if(is != null){
-		                    is.close();
-		                    is = null;
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}		
+        for (char[] segment : cfg.loadStopWordDictionary()) {
+            _StopWordDict.fillSegment(segment);
+        }
+
 	}
 	
 	/**
@@ -330,35 +218,10 @@ public class Dictionary {
 	private void loadQuantifierDict(){
 		//建立一个量词典实例
 		_QuantifierDict = new DictSegment((char)0);
-		//读取量词词典文件
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream(cfg.getQuantifierDicionary());
-        if(is == null){
-        	throw new RuntimeException("Quantifier Dictionary not found!!!");
+        for (char[] segment : cfg.loadQuantifierDictionary()) {
+            _QuantifierDict.fillSegment(segment);
         }
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(is , "UTF-8"), 512);
-			String theWord = null;
-			do {
-				theWord = br.readLine();
-				if (theWord != null && !"".equals(theWord.trim())) {
-					_QuantifierDict.fillSegment(theWord.trim().toLowerCase().toCharArray());
-				}
-			} while (theWord != null);
-			
-		} catch (IOException ioe) {
-			System.err.println("Quantifier Dictionary loading exception.");
-			ioe.printStackTrace();
-			
-		}finally{
-			try {
-				if(is != null){
-                    is.close();
-                    is = null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+
 	}
 	
 }
