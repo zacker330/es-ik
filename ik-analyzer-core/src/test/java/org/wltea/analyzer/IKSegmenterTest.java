@@ -63,6 +63,8 @@ public class IKSegmenterTest {
             assertSegmenterCorrect(segmenter.next(), "的", 90, 91, 1, "CN_WORD");
         } while (nextLexeme != null);
 
+
+
     }
 
     private void assertSegmenterCorrect(Lexeme nextLexeme, String lexemeText, int begin, int end, int length, String type) {

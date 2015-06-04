@@ -2,3 +2,5 @@ include 'ik-analyzer-lucence'
 
 include 'ik-analyzer-core'
 
+include 'ik-analyzer-elasticseaarch-plugin'
+

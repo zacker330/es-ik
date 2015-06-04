@@ -1,0 +1,21 @@
+apply plugin: 'distribution'
+
+
+dependencies {
+    compile project(':ik-analyzer-lucence')
+    compile(
+            'org.elasticsearch:elasticsearch:1.5.2',
+    )
+    testCompile group: 'org.testng', name: 'testng', version: '6.1.1'
+}
+
+distributions {
+    main {
+        baseName = 'ik-analyzer-elasticsearch'
+        contents {
+            from {"build/libs/"}
+            from { project(":ik-analyzer-core").buildDir.path + '/libs/' }
+            from { project(":ik-analyzer-lucence").buildDir.path + '/libs/' }
+        }
+    }
+}
