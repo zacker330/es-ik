@@ -64,6 +64,9 @@ public class IKSegmenterTest {
         } while (nextLexeme != null);
 
 
+        Reader in1 = new StringReader("林夕是个人");
+        IKSegmenter segmenter1 = new IKSegmenter(in1, useSmart);
+        Assert.assertEquals("林夕", segmenter1.next().getLexemeText());
 
     }
 

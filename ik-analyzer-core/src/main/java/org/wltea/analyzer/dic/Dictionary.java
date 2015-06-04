@@ -243,14 +243,15 @@ public class Dictionary {
 				is = this.getClass().getClassLoader().getResourceAsStream(extDictName);
 				//如果找不到扩展的字典，则忽略
 				if(is == null){
-					continue;
+                    continue;
 				}
 				try {
 					BufferedReader br = new BufferedReader(new InputStreamReader(is , "UTF-8"), 512);
 					String theWord = null;
 					do {
 						theWord = br.readLine();
-						if (theWord != null && !"".equals(theWord.trim())) {
+                        System.out.println(theWord);
+                        if (theWord != null && !"".equals(theWord.trim())) {
 							//加载扩展词典数据到主内存词典中
 							//System.out.println(theWord);
 							_MainDict.fillSegment(theWord.trim().toLowerCase().toCharArray());

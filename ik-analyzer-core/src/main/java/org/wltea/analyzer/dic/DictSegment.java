@@ -198,7 +198,7 @@ class DictSegment implements Comparable<DictSegment>{
 		//搜索当前节点的存储，查询对应keyChar的keyChar，如果没有则创建
 		DictSegment ds = lookforSegment(keyChar , enabled);
 		if(ds != null){
-			//处理keyChar对应的segment
+			//JSONUtils
 			if(length > 1){
 				//词元还没有完全加入词典树
 				ds.fillSegment(charArray, begin + 1, length - 1 , enabled);
