@@ -176,39 +176,7 @@ public class DefaultConfig implements Configuration {
 
     @Override
     public List<char[]> loadMainDictionary() {
-
-        List<char[]> result = new ArrayList<char[]>();
-        //读取主词典文件
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream(getMainDictionary());
-        if (is == null) {
-            throw new RuntimeException("Main Dictionary not found!!!");
-        }
-
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"), 512);
-            String theWord = null;
-            do {
-                theWord = br.readLine();
-                if (theWord != null && !"".equals(theWord.trim())) {
-                    result.add(theWord.trim().toLowerCase().toCharArray());
-                }
-            } while (theWord != null);
-
-        } catch (IOException ioe) {
-            System.err.println("Main Dictionary loading exception.");
-            ioe.printStackTrace();
-
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                    is = null;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+        return loadPropertiesFileFrom(getMainDictionary());
     }
 
     @Override
@@ -220,38 +188,7 @@ public class DefaultConfig implements Configuration {
             InputStream is = null;
             for (String extStopWordDictName : extStopWordDictFiles) {
                 System.out.println("加载扩展停止词典：" + extStopWordDictName);
-                //读取扩展词典文件
-                is = this.getClass().getClassLoader().getResourceAsStream(extStopWordDictName);
-                //如果找不到扩展的字典，则忽略
-                if (is == null) {
-                    continue;
-                }
-                try {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"), 512);
-                    String theWord = null;
-                    do {
-                        theWord = br.readLine();
-                        if (theWord != null && !"".equals(theWord.trim())) {
-                            //System.out.println(theWord);
-                            //加载扩展停止词典数据到内存中
-                            result.add(theWord.trim().toLowerCase().toCharArray());
-                        }
-                    } while (theWord != null);
-
-                } catch (IOException ioe) {
-                    System.err.println("Extension Stop word Dictionary loading exception.");
-                    ioe.printStackTrace();
-
-                } finally {
-                    try {
-                        if (is != null) {
-                            is.close();
-                            is = null;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                result.addAll(loadPropertiesFileFrom(extStopWordDictName));
             }
         }
         return result;
@@ -259,11 +196,15 @@ public class DefaultConfig implements Configuration {
 
     @Override
     public List<char[]> loadQuantifierDictionary() {
+        return loadPropertiesFileFrom(getQuantifierDicionary());
+    }
+
+    private List<char[]> loadPropertiesFileFrom(String path) {
         List<char[]> result = new ArrayList<char[]>();
         //读取量词词典文件
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream(getQuantifierDicionary());
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
         if (is == null) {
-            throw new RuntimeException("Quantifier Dictionary not found!!!");
+            throw new RuntimeException(path + "not found");
         }
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"), 512);
@@ -276,9 +217,8 @@ public class DefaultConfig implements Configuration {
             } while (theWord != null);
 
         } catch (IOException ioe) {
-            System.err.println("Quantifier Dictionary loading exception.");
+            System.err.println(path + "loading exception.");
             ioe.printStackTrace();
-
         } finally {
             try {
                 if (is != null) {
@@ -291,6 +231,4 @@ public class DefaultConfig implements Configuration {
         }
         return result;
     }
-
-
 }
