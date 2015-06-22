@@ -25,12 +25,7 @@
  */
 package org.wltea.analyzer.dic;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Collection;
-import java.util.List;
 
 import org.wltea.analyzer.cfg.Configuration;
 
@@ -39,15 +34,8 @@ import org.wltea.analyzer.cfg.Configuration;
  */
 public class Dictionary {
 
-
-	/*
-	 * 词典单子实例
-	 */
 	private static Dictionary singleton;
 	
-	/*
-	 * 主词典对象
-	 */
 	private DictSegment _MainDict;
 	
 	/*
@@ -194,7 +182,7 @@ public class Dictionary {
 	private void loadMainDict() {
         //建立一个主词典实例
         _MainDict = new DictSegment((char) 0);
-        for (char[] segment : cfg.loadMainDictionary()) {
+        for (char[] segment : cfg.getMainDictionary()) {
             _MainDict.fillSegment(segment);
 
         }
@@ -206,7 +194,7 @@ public class Dictionary {
 	private void loadStopWordDict(){
 		//建立一个主词典实例
 		_StopWordDict = new DictSegment((char)0);
-        for (char[] segment : cfg.loadStopWordDictionary()) {
+        for (char[] segment : cfg.getStopWordDictionary()) {
             _StopWordDict.fillSegment(segment);
         }
 
@@ -218,7 +206,7 @@ public class Dictionary {
 	private void loadQuantifierDict(){
 		//建立一个量词典实例
 		_QuantifierDict = new DictSegment((char)0);
-        for (char[] segment : cfg.loadQuantifierDictionary()) {
+        for (char[] segment : cfg.getQuantifierDictionary()) {
             _QuantifierDict.fillSegment(segment);
         }
 

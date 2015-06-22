@@ -8,5 +8,12 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'org.testng', name: 'testng', version: '6.1.1'
+    compile(
+            'org.xerial:sqlite-jdbc:3.8.10.1'
+    )
+    testCompile(
+            'org.testng:testng:6.1.1',
+            'com.google.guava:guava:18.0',
+            'commons-dbutils:commons-dbutils:1.6'
+    )
 }

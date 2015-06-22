@@ -49,9 +49,9 @@ public interface Configuration {
 	 */
 	public void setUseSmart(boolean useSmart);
 	
-    List<char[]> loadMainDictionary();
+    List<char[]> getMainDictionary();
 
-    List<char[]> loadStopWordDictionary();
+    List<char[]> getStopWordDictionary();
 
-    List<char[]> loadQuantifierDictionary();
+    List<char[]> getQuantifierDictionary();
 }

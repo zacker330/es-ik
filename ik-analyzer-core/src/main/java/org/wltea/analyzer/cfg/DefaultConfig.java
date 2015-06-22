@@ -25,39 +25,17 @@
  */
 package org.wltea.analyzer.cfg;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
-import java.util.Properties;
 
-/**
- * Configuration 默认实现
- * 2012-5-8
- */
 public class DefaultConfig implements Configuration {
 
-    //懒汉单例
-    private static final Configuration CFG = new DefaultConfig();
-    /*
-     * 分词器默认字典路径
-     */
-    private static final String PATH_DIC_MAIN = "main2012.dic";
-    private static final String PATH_DIC_QUANTIFIER = "quantifier.dic";
+    private static final Configuration instance = new DefaultConfig();
+    private final List<char[]> mainDictionary;
+    private final List<char[]> quantifierDictionary;
+    private final List<char[]> stopWordDictionary;
 
-    /*
-     * 分词器配置文件路径
-     */
-    private static final String FILE_NAME = "IKAnalyzer.cfg.xml";
-    //配置属性——扩展字典
-    private static final String EXT_DICT = "ext_dict";
-    //配置属性——扩展停止词典
-    private static final String EXT_STOP = "ext_stopwords";
-
-    private Properties props;
     /*
      * 是否使用smart方式分词
      */
@@ -69,23 +47,68 @@ public class DefaultConfig implements Configuration {
      * @return Configuration单例
      */
     public static Configuration getInstance() {
-        return CFG;
+        return instance;
     }
 
-    /*
-     * 初始化配置文件
-     */
     private DefaultConfig() {
-        props = new Properties();
+        mainDictionary = new ArrayList<char[]>();
+        quantifierDictionary = new ArrayList<char[]>();
+        stopWordDictionary = new ArrayList<char[]>();
+        Connection connection = null;
+        Statement statement = null;
+        String dbPath = getClass().getClassLoader().getResource("./dictionary.db").getPath();
+        System.out.println("================");
+        System.out.println(dbPath);
+        System.out.println("================");
 
-        InputStream input = this.getClass().getClassLoader().getResourceAsStream(FILE_NAME);
-        if (input != null) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+            statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+            ResultSet mainResult = statement.executeQuery("select * from main_dictionary");
+            while (mainResult.next()) {
+                String term = mainResult.getString("term");
+                if (term == null || "".equals(term.trim())) {
+                    continue;
+                }
+                mainDictionary.add(term.toCharArray());
+            }
+
+            ResultSet stopWordResult = statement.executeQuery("select * from stopword_dictionary");
+            while (stopWordResult.next()) {
+                String term = stopWordResult.getString("term");
+                if (term == null || "".equals(term.trim())) {
+                    continue;
+                }
+                stopWordDictionary.add(term.toCharArray());
+            }
+
+            ResultSet quantifierResult = statement.executeQuery("select * from quantifier_dictionary");
+            while (quantifierResult.next()) {
+                String term = quantifierResult.getString("term");
+                if (term == null || "".equals(term.trim())) {
+                    continue;
+                }
+                quantifierDictionary.add(term.toCharArray());
+            }
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
             try {
-                props.loadFromXML(input);
-            } catch (InvalidPropertiesFormatException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -111,124 +134,20 @@ public class DefaultConfig implements Configuration {
         this.useSmart = useSmart;
     }
 
-    /**
-     * 获取主词典路径
-     *
-     * @return String 主词典路径
-     */
-    public String getMainDictionary() {
-        return PATH_DIC_MAIN;
-    }
-
-    /**
-     * 获取量词词典路径
-     *
-     * @return String 量词词典路径
-     */
-    public String getQuantifierDicionary() {
-        return PATH_DIC_QUANTIFIER;
-    }
-
-    /**
-     * 获取扩展字典配置路径
-     *
-     * @return List<String> 相对类加载器的路径
-     */
-    public List<String> getExtDictionarys() {
-        List<String> extDictFiles = new ArrayList<String>(2);
-        String extDictCfg = props.getProperty(EXT_DICT);
-        if (extDictCfg != null) {
-            //使用;分割多个扩展字典配置
-            String[] filePaths = extDictCfg.split(";");
-            if (filePaths != null) {
-                for (String filePath : filePaths) {
-                    if (filePath != null && !"".equals(filePath.trim())) {
-                        extDictFiles.add(filePath.trim());
-                    }
-                }
-            }
-        }
-        return extDictFiles;
-    }
-
-
-    /**
-     * 获取扩展停止词典配置路径
-     *
-     * @return List<String> 相对类加载器的路径
-     */
-    public List<String> getExtStopWordDictionarys() {
-        List<String> extStopWordDictFiles = new ArrayList<String>(2);
-        String extStopWordDictCfg = props.getProperty(EXT_STOP);
-        if (extStopWordDictCfg != null) {
-            //使用;分割多个扩展字典配置
-            String[] filePaths = extStopWordDictCfg.split(";");
-            if (filePaths != null) {
-                for (String filePath : filePaths) {
-                    if (filePath != null && !"".equals(filePath.trim())) {
-                        extStopWordDictFiles.add(filePath.trim());
-                    }
-                }
-            }
-        }
-        return extStopWordDictFiles;
+    @Override
+    public List<char[]> getMainDictionary() {
+        return mainDictionary;
     }
 
     @Override
-    public List<char[]> loadMainDictionary() {
-        return loadPropertiesFileFrom(getMainDictionary());
+    public List<char[]> getStopWordDictionary() {
+        return stopWordDictionary;
     }
 
     @Override
-    public List<char[]> loadStopWordDictionary() {
-        List<char[]> result = new ArrayList<char[]>();
-        //加载扩展停止词典
-        List<String> extStopWordDictFiles = getExtStopWordDictionarys();
-        if (extStopWordDictFiles != null) {
-            InputStream is = null;
-            for (String extStopWordDictName : extStopWordDictFiles) {
-                System.out.println("加载扩展停止词典：" + extStopWordDictName);
-                result.addAll(loadPropertiesFileFrom(extStopWordDictName));
-            }
-        }
-        return result;
+    public List<char[]> getQuantifierDictionary() {
+        return quantifierDictionary;
     }
 
-    @Override
-    public List<char[]> loadQuantifierDictionary() {
-        return loadPropertiesFileFrom(getQuantifierDicionary());
-    }
 
-    private List<char[]> loadPropertiesFileFrom(String path) {
-        List<char[]> result = new ArrayList<char[]>();
-        //读取量词词典文件
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
-        if (is == null) {
-            throw new RuntimeException(path + "not found");
-        }
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"), 512);
-            String theWord = null;
-            do {
-                theWord = br.readLine();
-                if (theWord != null && !"".equals(theWord.trim())) {
-                    result.add(theWord.trim().toLowerCase().toCharArray());
-                }
-            } while (theWord != null);
-
-        } catch (IOException ioe) {
-            System.err.println(path + "loading exception.");
-            ioe.printStackTrace();
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                    is = null;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
 }
