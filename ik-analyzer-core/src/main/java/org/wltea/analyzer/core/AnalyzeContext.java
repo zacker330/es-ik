@@ -90,11 +90,7 @@ class AnalyzeContext {
     int getCursor(){
     	return this.cursor;
     }
-//    
-//    void setCursor(int cursor){
-//    	this.cursor = cursor;
-//    }
-    
+
     char[] getSegmentBuff(){
     	return this.segmentBuff;
     }
@@ -354,7 +350,7 @@ class AnalyzeContext {
 	 * 组合词元
 	 */
 	private void compound(Lexeme result){
-		if(!this.cfg.useSmart()){
+		if(!this.cfg.isSmartMode()){
 			return ;
 		}
    		//数量词合并处理

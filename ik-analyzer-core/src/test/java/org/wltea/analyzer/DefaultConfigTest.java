@@ -2,7 +2,7 @@ package org.wltea.analyzer;
 
 import com.google.common.base.Function;
 import org.apache.commons.dbutils.QueryRunner;
-import org.testng.Assert;
+import org.junit.Assert;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class DefaultConfigTest {
         readAndProcess(is, new Function<String, Boolean>() {
             @Override
             public Boolean apply(String term) {
-                QueryRunner queryRunner = new QueryRunner(new DictionaryDatasource());
+                QueryRunner queryRunner = new QueryRunner(new DictionaryDataSource());
                 try {
                     int result = queryRunner.update("INSERT OR IGNORE INTO main_dictionary values(?);", term);
                     Assert.assertEquals(1, result);
@@ -44,7 +44,7 @@ public class DefaultConfigTest {
         readAndProcess(is, new Function<String, Boolean>() {
             @Override
             public Boolean apply(String term) {
-                QueryRunner queryRunner = new QueryRunner(new DictionaryDatasource());
+                QueryRunner queryRunner = new QueryRunner(new DictionaryDataSource());
                 try {
                     int result = queryRunner.update("INSERT OR IGNORE INTO stopword_dictionary values(?);", term);
                     Assert.assertEquals(1, result);
@@ -63,7 +63,7 @@ public class DefaultConfigTest {
         readAndProcess(is, new Function<String, Boolean>() {
             @Override
             public Boolean apply(String term) {
-                QueryRunner queryRunner = new QueryRunner(new DictionaryDatasource());
+                QueryRunner queryRunner = new QueryRunner(new DictionaryDataSource());
                 try {
                     int result = queryRunner.update("INSERT OR IGNORE INTO quantifier_dictionary values(?);", term);
                     Assert.assertEquals(1, result);

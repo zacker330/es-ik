@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
-public class DictionaryDatasource implements DataSource {
+public class DictionaryDataSource implements DataSource {
     @Override
     public Connection getConnection() throws SQLException {
         try {
@@ -53,7 +53,6 @@ public class DictionaryDatasource implements DataSource {
 
     @Deprecated
 
-    @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
         return null;
     }

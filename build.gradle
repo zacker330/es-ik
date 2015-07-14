@@ -8,7 +8,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
 
-    sourceCompatibility = 1.6
+    sourceCompatibility = 1.7
     version = '1.0'
 
     repositories {
@@ -17,14 +17,13 @@ subprojects {
 
     test {
         // enable TestNG support (default is JUnit)
-        useTestNG()
 
         // show standard out and standard error of the test JVM(s) on the console
         testLogging.showStandardStreams = true
 
         // set heap size for the test JVM(s)
         minHeapSize = "128m"
-        maxHeapSize = "512m"
+        maxHeapSize = "1024m"
 
         // set JVM arguments for the test JVM(s)
         jvmArgs '-XX:MaxPermSize=256m'
@@ -35,9 +34,9 @@ subprojects {
         }
 
         // listen to standard out and standard error of the test JVM(s)
-        onOutput { descriptor, event ->
-            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-        }
+//        onOutput { descriptor, event ->
+//            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+//        }
     }
 }
 

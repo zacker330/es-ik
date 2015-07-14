@@ -1,7 +1,7 @@
 package org.wltea.analyzer;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import org.wltea.analyzer.core.IKSegmenter;
 import org.wltea.analyzer.core.Lexeme;
 
@@ -14,7 +14,14 @@ public class IKSegmenterTest {
     public void testSegment() throws Exception {
         Reader in = new StringReader("一一分 准确值就是它们听上去的那样。干柴诸如日期或用户ID。当然字符串也可以是准确值，如用户名或邮件地址。准确值Foo与准确值foo是不同的。准确值2014和准确值2014-09-15也是不同的。");
         boolean useSmart = true;
-        IKSegmenter segmenter = new IKSegmenter(in, useSmart);
+        String dbPath = getClass().getClassLoader().getResource("dictionary.db").getPath();
+        IKSegmenter segmenter = new IKSegmenter(in, Sqlite3Configure.smartModeSqlite3Configure(dbPath));
+//        Lexeme lexeme = segmenter.next();
+//        do {
+//            System.out.println(lexeme.getLexemeText());
+//            lexeme = segmenter.next();
+//        } while (lexeme != null);
+
         assertSegmenterCorrect(segmenter.next(), "一一分", 0, 3, 3, "CN_WORD");
         assertSegmenterCorrect(segmenter.next(), "准确值", 4, 7, 3, "CN_WORD");
         assertSegmenterCorrect(segmenter.next(), "听", 11, 12, 1, "CN_WORD");
@@ -43,7 +50,7 @@ public class IKSegmenterTest {
         assertSegmenterCorrect(segmenter.next(), "不同", 94, 96, 2, "CN_WORD");
 
 //        Reader in1 = new StringReader("林夕是个人");
-//        IKSegmenter segmenter1 = new IKSegmenter(in1, useSmart);
+//        IKSegmenter segmenter1 = new IKSegmenter(in1, isSmartMode);
 //        Assert.assertEquals("林夕", segmenter1.next().getLexemeText());
 //
     }
