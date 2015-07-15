@@ -12,7 +12,7 @@
 # How to use it
 
    - setup elasticsearch.yml
-   - 
+   -
 
 # How to update dictionary
 
