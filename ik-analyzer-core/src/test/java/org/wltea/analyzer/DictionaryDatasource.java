@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
-public class DictionaryDataSource implements DataSource {
+public class DictionaryDatasource implements DataSource {
     @Override
     public Connection getConnection() throws SQLException {
         try {
