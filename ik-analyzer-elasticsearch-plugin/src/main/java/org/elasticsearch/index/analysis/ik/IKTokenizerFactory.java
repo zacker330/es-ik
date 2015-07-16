@@ -22,7 +22,7 @@ public class IKTokenizerFactory extends AbstractTokenizerFactory {
     @Inject
     public IKTokenizerFactory(Index index, @IndexSettings Settings indexSettings, Environment env, @Assisted String name, @Assisted Settings settings) {
         super(index, indexSettings, name, settings);
-        configuration = Sqlite3Configure.smartModeSqlite3Configure(env.settings().get("db_path"));
+        configuration = Sqlite3Configure.smartModeSqlite3Configure(env.settings().get("ik_analyzer_db_path"));
     }
 
     @Override

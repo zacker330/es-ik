@@ -16,7 +16,7 @@ public class IKAnalyzerProvider extends AbstractIndexAnalyzerProvider<IKAnalyzer
     @Inject
     public IKAnalyzerProvider(Index index, @IndexSettings Settings indexSettings, Environment env, @Assisted String name, @Assisted Settings settings) {
         super(index, indexSettings, name, settings);
-        analyzer = new IKAnalyzer(Sqlite3Configure.smartModeSqlite3Configure(env.settings().get("db_path")));
+        analyzer = new IKAnalyzer(Sqlite3Configure.smartModeSqlite3Configure(env.settings().get("ik_analyzer_db_path")));
     }
 
     @Override
