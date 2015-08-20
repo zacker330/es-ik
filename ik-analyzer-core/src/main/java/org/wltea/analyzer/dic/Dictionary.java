@@ -27,7 +27,7 @@ package org.wltea.analyzer.dic;
 
 import java.util.Collection;
 
-import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.configuration.DictionaryConfiguration;
 
 /**
  * 词典管理类,单子模式
@@ -50,9 +50,9 @@ public class Dictionary {
 	/**
 	 * 配置对象
 	 */
-	private Configuration cfg;
+	private DictionaryConfiguration cfg;
 	
-	private Dictionary(Configuration cfg){
+	private Dictionary(DictionaryConfiguration cfg){
 		this.cfg = cfg;
 		this.loadMainDict();
 		this.loadStopWordDict();
@@ -67,7 +67,7 @@ public class Dictionary {
 	 * 该方法提供了一个在应用加载阶段就初始化字典的手段
 	 * @return Dictionary
 	 */
-	public static Dictionary initial(Configuration cfg){
+	public static Dictionary initial(DictionaryConfiguration cfg){
 		if(singleton == null){
 			synchronized(Dictionary.class){
 				if(singleton == null){

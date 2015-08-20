@@ -23,7 +23,7 @@
  */
 package org.wltea.analyzer.core;
 
-import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.configuration.DictionaryConfiguration;
 import org.wltea.analyzer.dic.Dictionary;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public final class IKSegmenter {
     //字符窜reader
     private Reader input;
     //分词器配置项
-    private Configuration cfg;
+    private DictionaryConfiguration cfg;
     //分词器上下文
     private AnalyzeContext context;
     //分词处理器列表
@@ -54,7 +54,7 @@ public final class IKSegmenter {
      * @param input
      * @param cfg   使用自定义的Configuration构造分词器
      */
-    public IKSegmenter(Reader input, Configuration cfg) {
+    public IKSegmenter(Reader input, DictionaryConfiguration cfg) {
         this.input = input;
         this.cfg = cfg;
 

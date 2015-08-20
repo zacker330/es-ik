@@ -32,7 +32,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.configuration.DictionaryConfiguration;
 import org.wltea.analyzer.dic.Dictionary;
 
 /**
@@ -75,9 +75,9 @@ class AnalyzeContext {
     private LinkedList<Lexeme> results;
     
 	//分词器配置项
-	private Configuration cfg;
+	private DictionaryConfiguration cfg;
     
-    public AnalyzeContext(Configuration cfg){
+    public AnalyzeContext(DictionaryConfiguration cfg){
     	this.cfg = cfg;
     	this.segmentBuff = new char[BUFF_SIZE];
     	this.charTypes = new int[BUFF_SIZE];

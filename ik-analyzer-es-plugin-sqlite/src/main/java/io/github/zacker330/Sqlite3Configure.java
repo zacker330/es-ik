@@ -1,16 +1,15 @@
-package org.wltea.analyzer;
-
-
+package io.github.zacker330;
+import org.elasticsearch.common.logging.ESLogger;
+import org.elasticsearch.common.logging.ESLoggerFactory;
 import org.wltea.analyzer.configuration.DictionaryConfiguration;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Sqlite3Configure implements DictionaryConfiguration {
-    private static Logger logger = Logger.getLogger("Sqlite3Configure");
+
+    private final ESLogger logger = ESLoggerFactory.getLogger(Sqlite3Configure.class.getName());
 
     private final List<char[]> mainDictionary;
     private final List<char[]> quantifierDictionary;
@@ -22,7 +21,7 @@ public class Sqlite3Configure implements DictionaryConfiguration {
 
     private Sqlite3Configure(String dbPath) {
         if (dbPath == null || "".equals(dbPath.trim())) {
-            logger.log(Level.CONFIG, "dbPath is required!");
+            logger.error("dbPath is required!");
             throw new IllegalArgumentException();
         }
 
@@ -66,10 +65,10 @@ public class Sqlite3Configure implements DictionaryConfiguration {
             }
 
         } catch (SQLException e) {
-            logger.log(Level.CONFIG, "there's sql error", e);
+            logger.error("there's sql error", e);
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
-            logger.log(Level.CONFIG, "not found sqlite3 jdbc", e);
+            logger.error("not found sqlite3 jdbc", e);
             throw new RuntimeException(e);
         } finally {
             try {
@@ -82,7 +81,7 @@ public class Sqlite3Configure implements DictionaryConfiguration {
                     connection = null;
                 }
             } catch (SQLException e) {
-                logger.log(Level.CONFIG, "can't close jdbc connection");
+                logger.error("can't close jdbc connection");
                 throw new RuntimeException(e);
             }
         }

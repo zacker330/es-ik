@@ -1,4 +1,6 @@
 include 'ik-analyzer-core'
 
-include 'ik-analyzer-elasticsearch-plugin'
+include 'ik-analyzer-es-plugin'
+
+include 'ik-analyzer-es-plugin-sqlite'
 
