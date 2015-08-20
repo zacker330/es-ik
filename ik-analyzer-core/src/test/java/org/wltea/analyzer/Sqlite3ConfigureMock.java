@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Sqlite3Configure implements DictionaryConfiguration {
+public class Sqlite3ConfigureMock implements DictionaryConfiguration {
     private static Logger logger = Logger.getLogger("Sqlite3Configure");
 
     private final List<char[]> mainDictionary;
@@ -20,7 +20,7 @@ public class Sqlite3Configure implements DictionaryConfiguration {
     private boolean smartMode = true;
 
 
-    private Sqlite3Configure(String dbPath) {
+    private Sqlite3ConfigureMock(String dbPath) {
         if (dbPath == null || "".equals(dbPath.trim())) {
             logger.log(Level.CONFIG, "dbPath is required!");
             throw new IllegalArgumentException();
@@ -88,8 +88,8 @@ public class Sqlite3Configure implements DictionaryConfiguration {
         }
     }
 
-    public static Sqlite3Configure smartModeSqlite3Configure(String dbPath) {
-        Sqlite3Configure sqlite3Configure = new Sqlite3Configure(dbPath);
+    public static Sqlite3ConfigureMock smartModeSqlite3Configure(String dbPath) {
+        Sqlite3ConfigureMock sqlite3Configure = new Sqlite3ConfigureMock(dbPath);
         sqlite3Configure.setSmartMode(true);
         return sqlite3Configure;
     }

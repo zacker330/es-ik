@@ -35,6 +35,7 @@ public class IkESPluginTest extends ElasticsearchTestCase {
                 .put("path.home", "none")
                 .put(IndexMetaData.SETTING_VERSION_CREATED, Version.CURRENT)
                 .build();
+
         Injector parentInjector = new ModulesBuilder().add(new SettingsModule(ImmutableSettings.EMPTY), new EnvironmentModule(new Environment(settings)), new IndicesAnalysisModule()).createInjector();
         Injector injector = new ModulesBuilder().add(
                 new IndexSettingsModule(index, settings),
@@ -46,5 +47,7 @@ public class IkESPluginTest extends ElasticsearchTestCase {
 
         TokenizerFactory tokenizerFactory = analysisService.tokenizer("ik_tokenizer");
         MatcherAssert.assertThat(tokenizerFactory, instanceOf(IKTokenizerFactory.class));
+
+
     }
 }

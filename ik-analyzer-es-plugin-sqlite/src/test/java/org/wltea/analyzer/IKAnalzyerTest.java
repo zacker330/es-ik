@@ -1,6 +1,7 @@
 
 package org.wltea.analyzer;
 
+import io.github.zacker330.es.ik.analyzer.Sqlite3Configuration;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -10,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.wltea.analyzer.configuration.DictionaryConfiguration;
 import org.wltea.analyzer.lucene.IKAnalyzer;
-import io.github.zacker330.Sqlite3Configure;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -27,7 +27,7 @@ public class IKAnalzyerTest {
     public void testAnalyzer() {
         //构建IK分词器，使用smart分词模式
 
-        configuration = Sqlite3Configure.smartModeSqlite3Configure(IKAnalzyerTest.class.getClassLoader().getResource("dictionary.db").getPath());
+        configuration = Sqlite3Configuration.smartModeSqlite3Configure(IKAnalzyerTest.class.getClassLoader().getResource("dictionary.db").getPath());
         Analyzer analyzer = new IKAnalyzer(configuration);
 
         //获取Lucene的TokenStream对象

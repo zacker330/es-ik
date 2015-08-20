@@ -3,6 +3,8 @@ package org.elasticsearch.index.analysis.ik;
 import org.apache.lucene.analysis.Tokenizer;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.inject.assistedinject.Assisted;
+import org.elasticsearch.common.logging.ESLogger;
+import org.elasticsearch.common.logging.ESLoggerFactory;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.index.Index;
@@ -16,6 +18,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 public class IKTokenizerFactory extends AbstractTokenizerFactory {
+    private final ESLogger logger = ESLoggerFactory.getLogger(IKTokenizerFactory.class.getName());
 
     private Configuration configuration;
     private ServiceLoader<Configuration> loader;
@@ -33,8 +36,6 @@ public class IKTokenizerFactory extends AbstractTokenizerFactory {
         configuration = iterator.next();
         configuration.init(index, indexSettings, env, name, settings);
 
-
-//        configuration = Sqlite3Configure.smartModeSqlite3Configure(env.settings().get("ik_analyzer_db_path"));
     }
 
     @Override

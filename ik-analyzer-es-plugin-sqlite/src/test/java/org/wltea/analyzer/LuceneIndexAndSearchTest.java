@@ -18,7 +18,7 @@ import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Assert;
 import org.junit.Test;
-import io.github.zacker330.Sqlite3Configure;
+import io.github.zacker330.es.ik.analyzer.Sqlite3Configuration;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class LuceneIndexAndSearchTest {
         String text = "IK Analyzer是一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。";
 
         //实例化IKAnalyzer分词器
-        Analyzer analyzer = new IKAnalyzer(Sqlite3Configure.smartModeSqlite3Configure(IKAnalzyerTest.class.getClassLoader().getResource("dictionary.db").getPath()));
+        Analyzer analyzer = new IKAnalyzer(Sqlite3Configuration.smartModeSqlite3Configure(IKAnalzyerTest.class.getClassLoader().getResource("dictionary.db").getPath()));
 
         Directory directory = null;
         IndexWriter iwriter = null;

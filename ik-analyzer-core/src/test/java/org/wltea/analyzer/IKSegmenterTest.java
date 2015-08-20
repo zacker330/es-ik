@@ -15,7 +15,7 @@ public class IKSegmenterTest {
         Reader in = new StringReader("一一分 准确值就是它们听上去的那样。干柴诸如日期或用户ID。当然字符串也可以是准确值，如用户名或邮件地址。准确值Foo与准确值foo是不同的。准确值2014和准确值2014-09-15也是不同的。");
         boolean useSmart = true;
         String dbPath = getClass().getClassLoader().getResource("dictionary.db").getPath();
-        IKSegmenter segmenter = new IKSegmenter(in, Sqlite3Configure.smartModeSqlite3Configure(dbPath));
+        IKSegmenter segmenter = new IKSegmenter(in, Sqlite3ConfigureMock.smartModeSqlite3Configure(dbPath));
 //        Lexeme lexeme = segmenter.next();
 //        do {
 //            System.out.println(lexeme.getLexemeText());

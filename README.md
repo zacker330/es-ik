@@ -6,14 +6,36 @@
 
 # Structure of ik-analyzer
 
-   - ik-analyzer-core
-   - ik-analyzer-elsaticsearch-plugin
+*  ik-analyzer-core
 
-# How to use it
+    The algorithm of this module is coming from [ik-analyzer](https://code.google.com/p/ik-analyzer/). In principle, you can use it to write a Solor analyzer plugin or a Elasticsearch plugin.
 
-- setup the path of sqliteDB's file in elasticsearch.yml, which is a configuration file for Elasticsearch
+    You just need implement `DictionaryConfiguration` interface to provide dictionary content which is used by analysing content process.
 
-    add field in 
+*  ik-analyzer-es-plugin:
+
+    Integrate with ik-analyzer-core module and Elasticsearch. Define a kind of [SPI](https://en.wikipedia.org/wiki/Service_provider_interface) which is `Configuration` extends `DictionaryConfiguration`
+
+*  ik-analyzer-es-plugin-sqlite
+
+    Persist dictionary's content into Sqlite3 database. This module is a kind of `service provider` to SPI Configuration defined in ik-analyzer-es-plugin.
+
+
+# How to use ik-analyzer
+
+Actually, ik-analyzer-es-plugin expose a interface `DictionaryConfiguration` a kind of SPI. ik-analyzer-es-plugin-sqlite implement it so that ik-analyzer-es-plugin can get dictionary's content from Sqlite. In other words, you can get your implementation like persisting dictionary's content into Redis.
+
+SPI is just a kind of concept. In java, I use [ServiceLoader](https://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html) to implement that. As soon as your implementation conforms with ServiceLoader's usage, don't need to change ik-analyzer-es-plugin module, you'll get a new ik-analyzer-es-plugin's plugin. :P
+
+
+
+
+# How to use ik-analyzer-es-plugin-sqlite
+
+
+- setup the path of sqlite3 DB's file in elasticsearch.yml, which is a configuration file for Elasticsearch
+
+    add field in your elsaticsearch.yml:
 
 
 

@@ -1,4 +1,4 @@
-package io.github.zacker330;
+package org.elasticsearch.index.analysis.ik;
 
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;

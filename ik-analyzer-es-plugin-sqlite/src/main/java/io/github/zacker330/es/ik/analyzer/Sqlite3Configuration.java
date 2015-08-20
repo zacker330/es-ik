@@ -1,25 +1,32 @@
-package io.github.zacker330;
+package io.github.zacker330.es.ik.analyzer;
+
 import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.ESLoggerFactory;
-import org.wltea.analyzer.configuration.DictionaryConfiguration;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.env.Environment;
+import org.elasticsearch.index.Index;
+import org.elasticsearch.index.analysis.ik.spi.Configuration;
+import org.elasticsearch.index.settings.IndexSettings;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sqlite3Configure implements DictionaryConfiguration {
+public class Sqlite3Configuration implements Configuration {
 
-    private final ESLogger logger = ESLoggerFactory.getLogger(Sqlite3Configure.class.getName());
+    private final ESLogger logger = ESLoggerFactory.getLogger(Sqlite3Configuration.class.getName());
 
-    private final List<char[]> mainDictionary;
-    private final List<char[]> quantifierDictionary;
-    private final List<char[]> stopWordDictionary;
+    private List<char[]> mainDictionary;
+    private List<char[]> quantifierDictionary;
+    private List<char[]> stopWordDictionary;
 
 
     private boolean smartMode = true;
 
+    public Sqlite3Configuration() {
+    }
 
-    private Sqlite3Configure(String dbPath) {
+    private Sqlite3Configuration(String dbPath) {
         if (dbPath == null || "".equals(dbPath.trim())) {
             logger.error("dbPath is required!");
             throw new IllegalArgumentException();
@@ -87,8 +94,8 @@ public class Sqlite3Configure implements DictionaryConfiguration {
         }
     }
 
-    public static Sqlite3Configure smartModeSqlite3Configure(String dbPath) {
-        Sqlite3Configure sqlite3Configure = new Sqlite3Configure(dbPath);
+    public static Sqlite3Configuration smartModeSqlite3Configure(String dbPath) {
+        Sqlite3Configuration sqlite3Configure = new Sqlite3Configuration(dbPath);
         sqlite3Configure.setSmartMode(true);
         return sqlite3Configure;
     }
@@ -130,4 +137,10 @@ public class Sqlite3Configure implements DictionaryConfiguration {
     }
 
 
+    @Override
+    public Configuration init(Index index, @IndexSettings Settings indexSettings, Environment env, String name, Settings settings) {
+        return Sqlite3Configuration.smartModeSqlite3Configure(env.settings().get("ik_analyzer_db_path"));
+    }
 }
+
+
