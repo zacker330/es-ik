@@ -8,7 +8,7 @@
 
 *  ik-analyzer-core
 
-    The algorithm of this module is coming from [ik-analyzer](https://code.google.com/p/ik-analyzer/). In principle, you can use it to write a Solor analyzer plugin or a Elasticsearch plugin.
+    The algorithm of this module is coming from [ik-analyzer](https://code.google.com/p/ik-analyzer/). In principle, you can use this module to implement a Solor analyzer plugin or a Elasticsearch plugin.
 
     You just need implement `DictionaryConfiguration` interface to provide dictionary content which is used by analysing content process.
 
@@ -41,11 +41,17 @@ SPI is just a kind of concept. In java, I use [ServiceLoader](https://docs.oracl
 
    -
 
-# Database's schema
+# Create a empty sqlite3 db for ik-analyzer-es-plugin-sqlite
 
-    CREATE TABLE main_dictionary(term TEXT NOT NULL,unique(term));
-    CREATE TABLE quantifier_dictionary(term TEXT NOT NULL,unique(term));
-    CREATE TABLE stopword_dictionary(term TEXT NOT NULL,unique(term));
+1. create database
+
+        sqlite3 dictionary.db
+
+2. create tables
+
+        CREATE TABLE main_dictionary(term TEXT NOT NULL,unique(term));
+        CREATE TABLE quantifier_dictionary(term TEXT NOT NULL,unique(term));
+        CREATE TABLE stopword_dictionary(term TEXT NOT NULL,unique(term));
 
 # How to update dictionary
 
