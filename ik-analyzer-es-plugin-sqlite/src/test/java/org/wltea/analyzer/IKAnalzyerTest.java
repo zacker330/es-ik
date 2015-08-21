@@ -1,7 +1,7 @@
 
 package org.wltea.analyzer;
 
-import io.github.zacker330.es.ik.analyzer.Sqlite3Configuration;
+import io.github.zacker330.es.ik.es.ik.analyzer.Sqlite3Configuration;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;

@@ -9,15 +9,16 @@ ext {
 dependencies {
 
     compile project(':ik-analyzer-core')
-    compile(
-            "org.elasticsearch:elasticsearch:$ELASTICSEARCH_VERSION",
-            "org.apache.lucene:lucene-core:$LUCENCE_VERSION",
-            "org.apache.lucene:lucene-queryparser:$LUCENCE_VERSION",
-            "org.apache.lucene:lucene-analyzers-common:$LUCENCE_VERSION"
-    )
+
+    compile("org.elasticsearch:elasticsearch:$ELASTICSEARCH_VERSION")
+    compile("org.apache.lucene:lucene-core:$LUCENCE_VERSION")
+    compile("org.apache.lucene:lucene-queryparser:$LUCENCE_VERSION")
+    compile("org.apache.lucene:lucene-analyzers-common:$LUCENCE_VERSION")
     runtime('ch.qos.logback:logback-classic:1.1.3')
 
-    testCompile("org.apache.lucene:lucene-test-framework:$LUCENCE_VERSION" )
+    testCompile("org.apache.lucene:lucene-test-framework:$LUCENCE_VERSION" ){
+        exclude module: 'randomizedtesting-runner'
+    }
 
     testCompile('junit:junit:4.12')
     testCompile('org.hamcrest:hamcrest-all:1.3')

@@ -30,6 +30,7 @@ public class IKTokenizerFactory extends AbstractTokenizerFactory {
         loader = ServiceLoader.load(Configuration.class);
         Iterator<Configuration> iterator = loader.iterator();
         if (!iterator.hasNext()) {
+            logger.error("please provide the implementation of Configuration interface");
             throw new NotFoundIKAnalyzerConfigurationImplementation();
         }
 

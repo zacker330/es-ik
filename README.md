@@ -53,6 +53,9 @@ SPI is just a kind of concept. In java, I use [ServiceLoader](https://docs.oracl
         CREATE TABLE quantifier_dictionary(term TEXT NOT NULL,unique(term));
         CREATE TABLE stopword_dictionary(term TEXT NOT NULL,unique(term));
 
+
+617052 records ~= 30MB db file
+
 # How to update dictionary
 
 

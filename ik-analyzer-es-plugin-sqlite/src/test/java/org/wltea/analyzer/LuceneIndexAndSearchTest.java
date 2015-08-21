@@ -18,7 +18,7 @@ import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Assert;
 import org.junit.Test;
-import io.github.zacker330.es.ik.analyzer.Sqlite3Configuration;
+import io.github.zacker330.es.ik.es.ik.analyzer.Sqlite3Configuration;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.IOException;

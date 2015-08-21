@@ -12,15 +12,9 @@ public class IKSegmenterTest {
 
     @Test
     public void testSegment() throws Exception {
-        Reader in = new StringReader("一一分 准确值就是它们听上去的那样。干柴诸如日期或用户ID。当然字符串也可以是准确值，如用户名或邮件地址。准确值Foo与准确值foo是不同的。准确值2014和准确值2014-09-15也是不同的。");
+        Reader in = new StringReader("一一分 准确值就是它们听上去的那样。干柴诸如日期或用户ID。当然字符串也可以是准确值，如用户名或邮件地址。准确值Foo与准确值foo是不同的。准确值2014和准确值2014-09-15也是不同的。测试");
         boolean useSmart = true;
-        String dbPath = getClass().getClassLoader().getResource("dictionary.db").getPath();
-        IKSegmenter segmenter = new IKSegmenter(in, Sqlite3ConfigureMock.smartModeSqlite3Configure(dbPath));
-//        Lexeme lexeme = segmenter.next();
-//        do {
-//            System.out.println(lexeme.getLexemeText());
-//            lexeme = segmenter.next();
-//        } while (lexeme != null);
+        IKSegmenter segmenter = new IKSegmenter(in, MockDictionary.smartModeSqlite3Configure());
 
         assertSegmenterCorrect(segmenter.next(), "一一分", 0, 3, 3, "CN_WORD");
         assertSegmenterCorrect(segmenter.next(), "准确值", 4, 7, 3, "CN_WORD");
@@ -48,11 +42,7 @@ public class IKSegmenterTest {
         assertSegmenterCorrect(segmenter.next(), "2014-09-15", 82, 92, 10, "LETTER");
         assertSegmenterCorrect(segmenter.next(), "也是", 92, 94, 2, "CN_WORD");
         assertSegmenterCorrect(segmenter.next(), "不同", 94, 96, 2, "CN_WORD");
-
-//        Reader in1 = new StringReader("林夕是个人");
-//        IKSegmenter segmenter1 = new IKSegmenter(in1, isSmartMode);
-//        Assert.assertEquals("林夕", segmenter1.next().getLexemeText());
-//
+        assertSegmenterCorrect(segmenter.next(), "测试", 98, 100, 2, "CN_WORD");
     }
 
     private void assertSegmenterCorrect(Lexeme nextLexeme, String lexemeText, int begin, int end, int length, String type) {
@@ -62,6 +52,13 @@ public class IKSegmenterTest {
         Assert.assertEquals(nextLexeme.getLength(), length);
         Assert.assertEquals(nextLexeme.getLexemeTypeString(), type);
 
+    }
 
+    private void print(Lexeme nextLexeme){
+        System.out.println(nextLexeme.getLexemeText());
+        System.out.println(nextLexeme.getBeginPosition());
+        System.out.println(nextLexeme.getEndPosition());
+        System.out.println(nextLexeme.getLength());
+        System.out.println(nextLexeme.getLexemeTypeString());
     }
 }
