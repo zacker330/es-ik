@@ -1,0 +1,53 @@
+apply plugin: 'java'
+
+group = "io.github.zacker330.es"
+archivesBaseName = "ik-analysis-core"
+version = "1.0.0"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    runtime('ch.qos.logback:logback-classic:1.1.3')
+    testCompile('junit:junit:4.12')
+}
+
+
+modifyPom {
+    project {
+        name 'es-ik'
+        description 'Kind of Chinese Analysis for Elasticsearch'
+        url 'https://github.com/zacker330/ik-analyzer'
+        inceptionYear '2015'
+
+        scm {
+            url 'https://github.com/zacker330/es-ik'
+            connection 'scm:https://github.com/zacker330/es-ik.git'
+            developerConnection 'scm:git@github.com:zacker330/es-ik.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'zacker330'
+                name 'Jack'
+                email 'zacker330@gmail.com'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = false
+    tests = true
+    javadoc = false
+}
+

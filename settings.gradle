@@ -1,6 +1,6 @@
-include 'ik-analyzer-core'
+include 'ik-analysis-core'
 
-include 'ik-analyzer-es-plugin'
+include 'ik-analysis-es-plugin'
 
-include 'ik-analyzer-es-plugin-sqlite'
+include 'es-ik-sqlite3'
 
