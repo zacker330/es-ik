@@ -1,4 +1,4 @@
-# Kind of Chinese Analysis for Elasticsearch [![Build Status](https://travis-ci.org/zacker330/ik-analyzer.svg?branch=master)](https://travis-ci.org/zacker330/es-ik)
+# Kind of Chinese Analysis for Elasticsearch [![Build Status](https://travis-ci.org/zacker330/es-ik.svg?branch=master)](https://travis-ci.org/zacker330/es-ik)
 
 # Requirements
 
