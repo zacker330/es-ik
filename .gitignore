@@ -5,3 +5,4 @@ target/
 *.iml
 build/
 .gradle/*
+buildSrc/.gradle/

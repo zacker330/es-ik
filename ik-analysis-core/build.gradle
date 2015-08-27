@@ -18,7 +18,7 @@ modifyPom {
     project {
         name 'es-ik'
         description 'Kind of Chinese Analysis for Elasticsearch'
-        url 'https://github.com/zacker330/ik-analyzer'
+        url 'https://github.com/zacker330/es-ik'
         inceptionYear '2015'
 
         scm {
