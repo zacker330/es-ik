@@ -1,37 +1,9 @@
-/**
- * 
- * IK 中文分词  版本 5.0
- * IK Analyzer release 5.0
- * 
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * 源代码由林良益(linliangyi2005@gmail.com)提供
- * 版权声明 2012，乌龙茶工作室
- * provided by Linliangyi and copyright 2012 by Oolong studio
- * 
- */
 package org.wltea.analyzer.dic;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 词典树分段，表示词典树的一个分枝
- */
 class DictSegment implements Comparable<DictSegment>{
 	
 	//公用字典表，存储汉字
@@ -73,34 +45,14 @@ class DictSegment implements Comparable<DictSegment>{
 		return  this.storeSize > 0;
 	}
 	
-	/**
-	 * 匹配词段
-	 * @param charArray
-	 * @return Hit
-	 */
 	Hit match(char[] charArray){
 		return this.match(charArray , 0 , charArray.length , null);
 	}
 	
-	/**
-	 * 匹配词段
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 
-	 */
 	Hit match(char[] charArray , int begin , int length){
 		return this.match(charArray , begin , length , null);
 	}
 	
-	/**
-	 * 匹配词段
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @param searchHit
-	 * @return Hit 
-	 */
 	Hit match(char[] charArray , int begin , int length , Hit searchHit){
 		
 		if(searchHit == null){
@@ -162,29 +114,14 @@ class DictSegment implements Comparable<DictSegment>{
 		return searchHit;		
 	}
 
-	/**
-	 * 加载填充词典片段
-	 * @param charArray
-	 */
 	void fillSegment(char[] charArray){
 		this.fillSegment(charArray, 0 , charArray.length , 1); 
 	}
 	
-	/**
-	 * 屏蔽词典中的一个词
-	 * @param charArray
-	 */
 	void disableSegment(char[] charArray){
 		this.fillSegment(charArray, 0 , charArray.length , 0); 
 	}
 	
-	/**
-	 * 加载填充词典片段
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @param enabled
-	 */
 	private synchronized void fillSegment(char[] charArray , int begin , int length , int enabled){
 		//获取字典表中的汉字对象
 		Character beginChar = new Character(charArray[begin]);
@@ -211,12 +148,6 @@ class DictSegment implements Comparable<DictSegment>{
 
 	}
 	
-	/**
-	 * 查找本节点下对应的keyChar的segment	 * 
-	 * @param keyChar
-	 * @param create  =1如果没有找到，则创建新的segment ; =0如果没有找到，不创建，返回null
-	 * @return
-	 */
 	private DictSegment lookforSegment(Character keyChar ,  int create){
 		
 		DictSegment ds = null;
@@ -275,10 +206,6 @@ class DictSegment implements Comparable<DictSegment>{
 	}
 	
 	
-	/**
-	 * 获取数组容器
-	 * 线程同步方法
-	 */
 	private DictSegment[] getChildrenArray(){
 		if(this.childrenArray == null){
 			synchronized(this){
@@ -290,10 +217,6 @@ class DictSegment implements Comparable<DictSegment>{
 		return this.childrenArray;
 	}
 	
-	/**
-	 * 获取Map容器
-	 * 线程同步方法
-	 */	
 	private Map<Character , DictSegment> getChildrenMap(){
 		if(this.childrenMap == null){
 			synchronized(this){
@@ -305,10 +228,6 @@ class DictSegment implements Comparable<DictSegment>{
 		return this.childrenMap;
 	}
 	
-	/**
-	 * 将数组中的segment迁移到Map中
-	 * @param segmentArray
-	 */
 	private void migrate(DictSegment[] segmentArray , Map<Character , DictSegment> segmentMap){
 		for(DictSegment segment : segmentArray){
 			if(segment != null){
@@ -317,11 +236,6 @@ class DictSegment implements Comparable<DictSegment>{
 		}
 	}
 
-	/**
-	 * 实现Comparable接口
-	 * @param o
-	 * @return int
-	 */
 	public int compareTo(DictSegment o) {
 		//对当前节点存储的char进行比较
 		return this.nodeChar.compareTo(o.nodeChar);

@@ -1,32 +1,5 @@
-/**
- * IK 中文分词  版本 5.0
- * IK Analyzer release 5.0
- * 
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * 源代码由林良益(linliangyi2005@gmail.com)提供
- * 版权声明 2012，乌龙茶工作室
- * provided by Linliangyi and copyright 2012 by Oolong studio
- * 
- */
 package org.wltea.analyzer.core;
 
-/**
- * IK分词器专用的Lexem快速排序集合
- */
 class QuickSortSet {
 	//链表头
 	private Cell head;
@@ -39,10 +12,6 @@ class QuickSortSet {
 		this.size = 0;
 	}
 	
-	/**
-	 * 向链表集合添加词元
-	 * @param lexeme
-	 */
 	boolean addLexeme(Lexeme lexeme){
 		Cell newCell = new Cell(lexeme); 
 		if(this.size == 0){
@@ -91,10 +60,6 @@ class QuickSortSet {
 		return false;
 	}
 	
-	/**
-	 * 返回链表头部元素
-	 * @return
-	 */
 	Lexeme peekFirst(){
 		if(this.head != null){
 			return this.head.lexeme;
@@ -102,10 +67,6 @@ class QuickSortSet {
 		return null;
 	}
 	
-	/**
-	 * 取出链表集合的第一个元素
-	 * @return Lexeme
-	 */
 	Lexeme pollFirst(){
 		if(this.size == 1){
 			Lexeme first = this.head.lexeme;
@@ -123,10 +84,6 @@ class QuickSortSet {
 		}
 	}
 	
-	/**
-	 * 返回链表尾部元素
-	 * @return
-	 */
 	Lexeme peekLast(){
 		if(this.tail != null){
 			return this.tail.lexeme;
@@ -134,10 +91,6 @@ class QuickSortSet {
 		return null;
 	}
 	
-	/**
-	 * 取出链表集合的最后一个元素
-	 * @return Lexeme
-	 */
 	Lexeme pollLast(){
 		if(this.size == 1){
 			Lexeme last = this.head.lexeme;
@@ -157,57 +110,18 @@ class QuickSortSet {
 		}
 	}
 	
-	/**
-	 * 返回集合大小
-	 * @return
-	 */
 	int size(){
 		return this.size;
 	}
 	
-	/**
-	 * 判断集合是否为空
-	 * @return
-	 */
 	boolean isEmpty(){
 		return this.size == 0;
 	}
 	
-	/**
-	 * 返回lexeme链的头部
-	 * @return
-	 */
 	Cell getHead(){
 		return this.head;
 	}
 	
-	/**
-	 * 
-	 * IK 中文分词  版本 5.0
-	 * IK Analyzer release 5.0
-	 * 
-	 * Licensed to the Apache Software Foundation (ASF) under one or more
-	 * contributor license agreements.  See the NOTICE file distributed with
-	 * this work for additional information regarding copyright ownership.
-	 * The ASF licenses this file to You under the Apache License, Version 2.0
-	 * (the "License"); you may not use this file except in compliance with
-	 * the License.  You may obtain a copy of the License at
-	 *
-	 *     http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
-	 * 源代码由林良益(linliangyi2005@gmail.com)提供
-	 * 版权声明 2012，乌龙茶工作室
-	 * provided by Linliangyi and copyright 2012 by Oolong studio
-	 * 
-	 * QuickSortSet集合单元
-	 * 
-	 */
 	class Cell implements Comparable<Cell>{
 		private Cell prev;
 		private Cell next;

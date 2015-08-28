@@ -59,14 +59,6 @@ public class Dictionary {
 		this.loadQuantifierDict();
 	}
 	
-	/**
-	 * 词典初始化
-	 * 由于IK Analyzer的词典采用Dictionary类的静态方法进行词典初始化
-	 * 只有当Dictionary类被实际调用时，才会开始载入词典，
-	 * 这将延长首次分词操作的时间6.1.1
-	 * 该方法提供了一个在应用加载阶段就初始化字典的手段
-	 * @return Dictionary
-	 */
 	public static Dictionary initial(DictionaryConfiguration cfg){
 		if(singleton == null){
 			synchronized(Dictionary.class){
@@ -79,10 +71,6 @@ public class Dictionary {
 		return singleton;
 	}
 	
-	/**
-	 * 获取词典单子实例
-	 * @return Dictionary 单例对象
-	 */
 	public static Dictionary getSingleton(){
 		if(singleton == null){
 			throw new IllegalStateException("词典尚未初始化，请先调用initial方法");
@@ -90,10 +78,6 @@ public class Dictionary {
 		return singleton;
 	}
 	
-	/**
-	 * 批量加载新词条
-	 * @param words Collection<String>词条列表
-	 */
 	public void addWords(Collection<String> words){
 		if(words != null){
 			for(String word : words){
@@ -105,10 +89,6 @@ public class Dictionary {
 		}
 	}
 	
-	/**
-	 * 批量移除（屏蔽）词条
-	 * @param words
-	 */
 	public void disableWords(Collection<String> words){
 		if(words != null){
 			for(String word : words){
@@ -120,59 +100,26 @@ public class Dictionary {
 		}
 	}
 	
-	/**
-	 * 检索匹配主词典
-	 * @param charArray
-	 * @return Hit 匹配结果描述
-	 */
 	public Hit matchInMainDict(char[] charArray){
 		return singleton._MainDict.match(charArray);
 	}
 	
-	/**
-	 * 检索匹配主词典
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 匹配结果描述
-	 */
 	public Hit matchInMainDict(char[] charArray , int begin, int length){
 		return singleton._MainDict.match(charArray, begin, length);
 	}
 	
-	/**
-	 * 检索匹配量词词典
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 匹配结果描述
-	 */
 	public Hit matchInQuantifierDict(char[] charArray , int begin, int length){
 		return singleton._QuantifierDict.match(charArray, begin, length);
 	}
 	
 	
-	/**
-	 * 从已匹配的Hit中直接取出DictSegment，继续向下匹配
-	 * @param charArray
-	 * @param currentIndex
-	 * @param matchedHit
-	 * @return Hit
-	 */
 	public Hit matchWithHit(char[] charArray , int currentIndex , Hit matchedHit){
 		DictSegment ds = matchedHit.getMatchedDictSegment();
 		return ds.match(charArray, currentIndex, 1 , matchedHit);
 	}
 	
 	
-	/**
-	 * 判断是否是停止词
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return boolean
-	 */
-	public boolean isStopWord(char[] charArray , int begin, int length){			
+	public boolean isStopWord(char[] charArray , int begin, int length){
 		return singleton._StopWordDict.match(charArray, begin, length).isMatch();
 	}	
 	

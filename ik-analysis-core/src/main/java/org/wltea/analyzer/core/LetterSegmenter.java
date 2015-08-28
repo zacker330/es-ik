@@ -1,35 +1,7 @@
-/**
- * IK 中文分词  版本 5.0
- * IK Analyzer release 5.0
- * 
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * 源代码由林良益(linliangyi2005@gmail.com)提供
- * 版权声明 2012，乌龙茶工作室
- * provided by Linliangyi and copyright 2012 by Oolong studio
- * 
- */
 package org.wltea.analyzer.core;
 
 import java.util.Arrays;
 
-/**
- * 
- * 英文字符及阿拉伯数字子分词器
- */
 class LetterSegmenter implements ISegmenter {
 	
 	//子分词器标签
@@ -117,13 +89,6 @@ class LetterSegmenter implements ISegmenter {
 		this.arabicEnd = -1;
 	}	
 	
-	/**
-	 * 处理数字字母混合输出
-	 * 如：windos2000 | linliangyi2005@gmail.com
-	 * @param input
-	 * @param context
-	 * @return
-	 */
 	private boolean processMixLetter(AnalyzeContext context){
 		boolean needLock = false;
 		
@@ -175,11 +140,6 @@ class LetterSegmenter implements ISegmenter {
 		return needLock;
 	}
 	
-	/**
-	 * 处理纯英文字母输出
-	 * @param context
-	 * @return
-	 */
 	private boolean processEnglishLetter(AnalyzeContext context){
 		boolean needLock = false;
 		
@@ -223,11 +183,6 @@ class LetterSegmenter implements ISegmenter {
 		return needLock;			
 	}
 	
-	/**
-	 * 处理阿拉伯数字输出
-	 * @param context
-	 * @return
-	 */
 	private boolean processArabicLetter(AnalyzeContext context){
 		boolean needLock = false;
 		
@@ -274,21 +229,11 @@ class LetterSegmenter implements ISegmenter {
 		return needLock;		
 	}	
 
-	/**
-	 * 判断是否是字母连接符号
-	 * @param input
-	 * @return
-	 */
 	private boolean isLetterConnector(char input){
 		int index = Arrays.binarySearch(Letter_Connector, input);
 		return index >= 0;
 	}
 	
-	/**
-	 * 判断是否是数字连接符号
-	 * @param input
-	 * @return
-	 */
 	private boolean isNumConnector(char input){
 		int index = Arrays.binarySearch(Num_Connector, input);
 		return index >= 0;

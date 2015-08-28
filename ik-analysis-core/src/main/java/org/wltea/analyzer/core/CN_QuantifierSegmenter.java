@@ -1,27 +1,3 @@
-/**
- * IK 中文分词  版本 5.0
- * IK Analyzer release 5.0
- * 
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * 源代码由林良益(linliangyi2005@gmail.com)提供
- * 版权声明 2012，乌龙茶工作室
- * provided by Linliangyi and copyright 2012 by Oolong studio
- * 
- */
 package org.wltea.analyzer.core;
 
 import java.util.HashSet;
@@ -32,10 +8,6 @@ import java.util.Set;
 import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.dic.Hit;
 
-/**
- * 
- * 中文数量词子分词器
- */
 class CN_QuantifierSegmenter implements ISegmenter{
 	
 	//子分词器标签
@@ -73,9 +45,6 @@ class CN_QuantifierSegmenter implements ISegmenter{
 		this.countHits  = new LinkedList<Hit>();
 	}
 	
-	/**
-	 * 分词
-	 */
 	public void analyze(AnalyzeContext context) {
 		//处理中文数词
 		this.processCNumber(context);
@@ -92,18 +61,12 @@ class CN_QuantifierSegmenter implements ISegmenter{
 	}
 	
 
-	/**
-	 * 重置子分词器状态
-	 */
 	public void reset() {
 		nStart = -1;
 		nEnd = -1;
 		countHits.clear();
 	}
 	
-	/**
-	 * 处理数词
-	 */
 	private void processCNumber(AnalyzeContext context){
 		if(nStart == -1 && nEnd == -1){//初始状态
 			if(CharacterUtil.CHAR_CHINESE == context.getCurrentCharType() 
@@ -138,10 +101,6 @@ class CN_QuantifierSegmenter implements ISegmenter{
 		}	
 	}
 	
-	/**
-	 * 处理中文量词
-	 * @param context
-	 */
 	private void processCount(AnalyzeContext context){
 		// 判断是否需要启动量词扫描
 		if(!this.needCountScan(context)){
@@ -204,10 +163,6 @@ class CN_QuantifierSegmenter implements ISegmenter{
 		}
 	}
 	
-	/**
-	 * 判断是否需要扫描量词
-	 * @return
-	 */
 	private boolean needCountScan(AnalyzeContext context){
 		if((nStart != -1 && nEnd != -1 ) || !countHits.isEmpty()){
 			//正在处理中文数词,或者正在处理量词
@@ -226,10 +181,6 @@ class CN_QuantifierSegmenter implements ISegmenter{
 		return false;
 	}
 	
-	/**
-	 * 添加数词词元到结果集
-	 * @param context
-	 */
 	private void outputNumLexeme(AnalyzeContext context){
 		if(nStart > -1 && nEnd > -1){
 			//输出数词

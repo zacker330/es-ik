@@ -1,27 +1,3 @@
-/**
- * IK 中文分词  版本 5.0
- * IK Analyzer release 5.0
- * 
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * 源代码由林良益(linliangyi2005@gmail.com)提供
- * 版权声明 2012，乌龙茶工作室
- * provided by Linliangyi and copyright 2012 by Oolong studio
- * 
- */
 package org.wltea.analyzer.core;
 
 import java.io.IOException;
@@ -35,11 +11,6 @@ import java.util.Set;
 import org.wltea.analyzer.configuration.DictionaryConfiguration;
 import org.wltea.analyzer.dic.Dictionary;
 
-/**
- * 
- * 分词器上下文状态
- * 
- */
 class AnalyzeContext {
 	
 	//默认缓冲区大小
@@ -107,12 +78,6 @@ class AnalyzeContext {
     	return this.buffOffset;
     }
 	
-    /**
-     * 根据context的上下文情况，填充segmentBuff 
-     * @param reader
-     * @return 返回待分析的（有效的）字串长度
-     * @throws IOException 
-     */
     int fillBuffer(Reader reader) throws IOException{
     	int readCount = 0;
     	if(this.buffOffset == 0){
@@ -135,20 +100,12 @@ class AnalyzeContext {
     	return readCount;
     }
 
-    /**
-     * 初始化buff指针，处理第一个字符
-     */
     void initCursor(){
     	this.cursor = 0;
     	this.segmentBuff[this.cursor] = CharacterUtil.regularize(this.segmentBuff[this.cursor]);
     	this.charTypes[this.cursor] = CharacterUtil.identifyCharType(this.segmentBuff[this.cursor]);
     }
     
-    /**
-     * 指针+1
-     * 成功返回 true； 指针已经到了buff尾部，不能前进，返回false
-     * 并处理当前字符
-     */
     boolean moveCursor(){
     	if(this.cursor < this.available - 1){
     		this.cursor++;
@@ -160,51 +117,22 @@ class AnalyzeContext {
     	}
     }
 	
-    /**
-     * 设置当前segmentBuff为锁定状态
-     * 加入占用segmentBuff的子分词器名称，表示占用segmentBuff
-     * @param segmenterName
-     */
 	void lockBuffer(String segmenterName){
 		this.buffLocker.add(segmenterName);
 	}
 	
-	/**
-	 * 移除指定的子分词器名，释放对segmentBuff的占用
-	 * @param segmenterName
-	 */
 	void unlockBuffer(String segmenterName){
 		this.buffLocker.remove(segmenterName);
 	}
 	
-	/**
-	 * 只要buffLocker中存在segmenterName
-	 * 则buffer被锁定
-	 * @return boolean 缓冲去是否被锁定
-	 */
 	boolean isBufferLocked(){
 		return this.buffLocker.size() > 0;
 	}
 
-	/**
-	 * 判断当前segmentBuff是否已经用完
-	 * 当前执针cursor移至segmentBuff末端this.available - 1
-	 * @return
-	 */
 	boolean isBufferConsumed(){
 		return this.cursor == this.available - 1;
 	}
 	
-	/**
-	 * 判断segmentBuff是否需要读取新数据
-	 * 
-	 * 满足一下条件时，
-	 * 1.available == BUFF_SIZE 表示buffer满载
-	 * 2.buffIndex < available - 1 && buffIndex > available - BUFF_EXHAUST_CRITICAL表示当前指针处于临界区内
-	 * 3.!context.isBufferLocked()表示没有segmenter在占用buffer
-	 * 要中断当前循环（buffer要进行移位，并再读取数据的操作）
-	 * @return
-	 */
 	boolean needRefillBuffer(){
 		return this.available == BUFF_SIZE 
 			&& this.cursor < this.available - 1   
@@ -212,26 +140,14 @@ class AnalyzeContext {
 			&& !this.isBufferLocked();
 	}
 	
-	/**
-	 * 累计当前的segmentBuff相对于reader起始位置的位移
-	 */
 	void markBufferOffset(){
 		this.buffOffset += this.cursor;
 	}
 	
-	/**
-	 * 向分词结果集添加词元
-	 * @param lexeme
-	 */
 	void addLexeme(Lexeme lexeme){
 		this.orgLexemes.addLexeme(lexeme);
 	}
 	
-	/**
-	 * 添加分词结果路径
-	 * 路径起始位置 ---> 路径 映射表
-	 * @param path
-	 */
 	void addLexemePath(LexemePath path){
 		if(path != null){
 			this.pathMap.put(path.getPathBegin(), path);
@@ -239,17 +155,10 @@ class AnalyzeContext {
 	}
 	
 	
-	/**
-	 * 返回原始分词结果
-	 * @return
-	 */
 	QuickSortSet getOrgLexemes(){
 		return this.orgLexemes;
 	}
 	
-	/**
-	 * 处理未知类型的CJK字符
-	 */
 	void processUnkownCJKChar(){
 		int index = 0;
 		for( ; index < this.available ;){
@@ -285,10 +194,6 @@ class AnalyzeContext {
 		this.pathMap.clear();
 	}
 	
-	/**
-	 * 对CJK字符进行单字输出
-	 * @param index
-	 */
 	private void outputSingleCJK(int index){
 		if(CharacterUtil.CHAR_CHINESE == this.charTypes[index]){			
 			Lexeme singleCharLexeme = new Lexeme(this.buffOffset , index , 1 , Lexeme.TYPE_CNCHAR);
@@ -299,20 +204,10 @@ class AnalyzeContext {
 		}
 	}
 		
-	/**
-	 * 判断结果集中是否还有为输出的结果
-	 * @return
-	 */
 	boolean hasNextResult(){
 		return !this.results.isEmpty();
 	}
 	
-	/**
-	 * 返回lexeme 
-	 * 
-	 * 同时处理合并
-	 * @return
-	 */
 	Lexeme getNextLexeme(){
 		//从结果集取出，并移除第一个Lexme
 		Lexeme result = this.results.pollFirst();
@@ -331,10 +226,7 @@ class AnalyzeContext {
 		return result;
 	}
 	
-	/**
-	 * 重置分词上下文状态
-	 */
-	void reset(){		
+	void reset(){
 		this.buffLocker.clear();
         this.orgLexemes = new QuickSortSet();
         this.available =0;
@@ -346,9 +238,6 @@ class AnalyzeContext {
     	this.pathMap.clear();
 	}
 	
-	/**
-	 * 组合词元
-	 */
 	private void compound(Lexeme result){
 		if(!this.cfg.isSmartMode()){
 			return ;

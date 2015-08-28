@@ -36,11 +36,6 @@ class IKArbitrator {
 		
 	}
 	
-	/**
-	 * 分词歧义处理
-	 * @param orgLexemes
-	 * @param useSmart
-	 */
 	void process(AnalyzeContext context , boolean useSmart){
 		QuickSortSet orgLexemes = context.getOrgLexemes();
 		Lexeme orgLexeme = orgLexemes.pollFirst();
@@ -82,14 +77,6 @@ class IKArbitrator {
 			context.addLexemePath(judgeResult);
 		}
 	}
-	
-	/**
-	 * 歧义识别
-	 * @param lexemeCell 歧义路径链表头
-	 * @param fullTextLength 歧义路径文本长度
-	 * @param option 候选结果路径
-	 * @return
-	 */
 	private LexemePath judge(QuickSortSet.Cell lexemeCell , int fullTextLength){
 		//候选路径集合
 		TreeSet<LexemePath> pathOptions = new TreeSet<LexemePath>();
@@ -118,11 +105,6 @@ class IKArbitrator {
 
 	}
 	
-	/**
-	 * 向前遍历，添加词元，构造一个无歧义词元组合
-	 * @param LexemePath path
-	 * @return
-	 */
 	private Stack<QuickSortSet.Cell> forwardPath(QuickSortSet.Cell lexemeCell , LexemePath option){
 		//发生冲突的Lexeme栈
 		Stack<QuickSortSet.Cell> conflictStack = new Stack<QuickSortSet.Cell>();
@@ -138,11 +120,6 @@ class IKArbitrator {
 		return conflictStack;
 	}
 	
-	/**
-	 * 回滚词元链，直到它能够接受指定的词元
-	 * @param lexeme 
-	 * @param l
-	 */
 	private void backPath(Lexeme l  , LexemePath option){
 		while(option.checkCross(l)){
 			option.removeTail();

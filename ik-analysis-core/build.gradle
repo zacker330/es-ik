@@ -43,11 +43,17 @@ modifyPom {
             }
         }
     }
+
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
 }
 
 extraArchive {
-    sources = false
+    sources = true
     tests = true
-    javadoc = false
+    javadoc = true
 }
 

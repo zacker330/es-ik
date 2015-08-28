@@ -48,12 +48,6 @@ public final class IKSegmenter {
     private IKArbitrator arbitrator;
 
 
-    /**
-     * IK分词器构造函数
-     *
-     * @param input
-     * @param cfg   使用自定义的Configuration构造分词器
-     */
     public IKSegmenter(Reader input, DictionaryConfiguration cfg) {
         this.input = input;
         this.cfg = cfg;
@@ -69,11 +63,6 @@ public final class IKSegmenter {
     }
 
 
-    /**
-     * 初始化词典，加载子分词器实现
-     *
-     * @return List<ISegmenter>
-     */
     private List<ISegmenter> loadSegmenters() {
         List<ISegmenter> segmenters = new ArrayList<ISegmenter>(4);
         //处理字母的子分词器
@@ -85,12 +74,6 @@ public final class IKSegmenter {
         return segmenters;
     }
 
-    /**
-     * 分词，获取下一个词元
-     *
-     * @return Lexeme 词元对象
-     * @throws IOException
-     */
     public synchronized Lexeme next() throws IOException {
         if (this.context.hasNextResult()) {
             //存在尚未输出的分词结果
@@ -140,11 +123,6 @@ public final class IKSegmenter {
         }
     }
 
-    /**
-     * 重置分词器到初始状态
-     *
-     * @param input
-     */
     public synchronized void reset(Reader input) {
         this.input = input;
         context.reset();
