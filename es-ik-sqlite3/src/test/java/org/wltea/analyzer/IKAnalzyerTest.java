@@ -1,6 +1,7 @@
 
 package org.wltea.analyzer;
 
+import io.github.zacker330.es.ik.AbstractIntegrationTest;
 import io.github.zacker330.es.ik.es.ik.analyzer.Sqlite3Configuration;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -19,7 +20,7 @@ import java.io.StringReader;
  * 使用IKAnalyzer进行分词的演示
  * 2012-10-22
  */
-public class IKAnalzyerTest {
+public class IKAnalzyerTest extends AbstractIntegrationTest {
 
     private DictionaryConfiguration configuration;
 
@@ -27,7 +28,7 @@ public class IKAnalzyerTest {
     public void testAnalyzer() {
         //构建IK分词器，使用smart分词模式
 
-        configuration = Sqlite3Configuration.smartModeSqlite3Configure(IKAnalzyerTest.class.getClassLoader().getResource("dictionary.db").getPath());
+        configuration = Sqlite3Configuration.smartModeSqlite3Configure(dbPath);
         Analyzer analyzer = new IKAnalyzer(configuration);
 
         //获取Lucene的TokenStream对象

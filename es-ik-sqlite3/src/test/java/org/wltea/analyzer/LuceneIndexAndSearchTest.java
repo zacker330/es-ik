@@ -1,5 +1,7 @@
 package org.wltea.analyzer;
 
+import io.github.zacker330.es.ik.AbstractIntegrationTest;
+import io.github.zacker330.es.ik.es.ik.analyzer.Sqlite3Configuration;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -17,14 +19,13 @@ import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
-import io.github.zacker330.es.ik.es.ik.analyzer.Sqlite3Configuration;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.IOException;
 
-
-public class LuceneIndexAndSearchTest {
+public class LuceneIndexAndSearchTest extends AbstractIntegrationTest {
 
 
     @Test
@@ -35,7 +36,7 @@ public class LuceneIndexAndSearchTest {
         String text = "IK Analyzer是一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。";
 
         //实例化IKAnalyzer分词器
-        Analyzer analyzer = new IKAnalyzer(Sqlite3Configuration.smartModeSqlite3Configure(IKAnalzyerTest.class.getClassLoader().getResource("dictionary.db").getPath()));
+        Analyzer analyzer = new IKAnalyzer(Sqlite3Configuration.smartModeSqlite3Configure(dbPath));
 
         Directory directory = null;
         IndexWriter iwriter = null;

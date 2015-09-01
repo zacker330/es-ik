@@ -8,7 +8,14 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
-public class DictionaryDatasource implements DataSource {
+public class DictionaryDataSource implements DataSource {
+
+    private String dbPath;
+
+    public DictionaryDataSource(String dbPath) {
+        this.dbPath = dbPath;
+    }
+
     @Override
     public Connection getConnection() throws SQLException {
         try {
@@ -16,7 +23,6 @@ public class DictionaryDatasource implements DataSource {
         } catch (ClassNotFoundException e) {
             System.out.println(e);
         }
-        String dbPath = this.getClass().getClassLoader().getResource("./dictionary.db").getPath();
         return DriverManager.getConnection("jdbc:sqlite:" + dbPath);
     }
 
