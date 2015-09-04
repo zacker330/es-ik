@@ -8,7 +8,7 @@ import org.elasticsearch.plugins.AbstractPlugin;
 public class AnalysisIKPlugin extends AbstractPlugin {
     @Override
     public String name() {
-        return "ik-analyzer";
+        return "ik_analysis";
     }
 
     @Override

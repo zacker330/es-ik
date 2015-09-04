@@ -1,8 +1,6 @@
-apply plugin: 'distribution'
-
 group = "io.github.zacker330.es"
 archivesBaseName = "es-ik-sqlite3"
-version = "1.0.0"
+version = "1.0.1"
 
 ext {
     LUCENCE_VERSION = '4.10.4'

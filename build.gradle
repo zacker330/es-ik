@@ -16,12 +16,20 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'distribution'
+
 
     sourceCompatibility = 1.7
     version = '1.0'
 
     repositories {
         mavenCentral()
+    }
+
+    distZip {
+        exclude("**/*-javadoc.jar")
+        exclude("**/*-tests.jar")
+        exclude("**/*-sources.jar")
     }
 
 

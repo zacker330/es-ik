@@ -25,7 +25,7 @@
  */
 package org.wltea.analyzer.dic;
 
-/**
+/*
  * 表示一次词典匹配的命中
  */
 public class Hit {
@@ -52,38 +52,38 @@ public class Hit {
 	private int end;
 	
 	
-	/**
+	/*
 	 * 判断是否完全匹配
 	 */
 	public boolean isMatch() {
 		return (this.hitState & MATCH) > 0;
 	}
-	/**
+	/*
 	 * 
 	 */
 	public void setMatch() {
 		this.hitState = this.hitState | MATCH;
 	}
 
-	/**
+	/*
 	 * 判断是否是词的前缀
 	 */
 	public boolean isPrefix() {
 		return (this.hitState & PREFIX) > 0;
 	}
-	/**
+	/*
 	 * 
 	 */
 	public void setPrefix() {
 		this.hitState = this.hitState | PREFIX;
 	}
-	/**
+	/*
 	 * 判断是否是不匹配
 	 */
 	public boolean isUnmatch() {
 		return this.hitState == UNMATCH ;
 	}
-	/**
+	/*
 	 * 
 	 */
 	public void setUnmatch() {

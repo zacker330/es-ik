@@ -139,7 +139,7 @@ public class Sqlite3Configuration implements Configuration {
 
     @Override
     public Configuration init(Index index, @IndexSettings Settings indexSettings, Environment env, String name, Settings settings) {
-        return Sqlite3Configuration.smartModeSqlite3Configure(env.settings().get("ik_analyzer_db_path"));
+        return Sqlite3Configuration.smartModeSqlite3Configure(env.settings().get("ik_analysis_db_path"));
     }
 }
 
